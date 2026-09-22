@@ -1,0 +1,56 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Dependencies
+node_modules
+vendor
+
+# Build outputs
+dist
+build
+.next
+out
+coverage
+*.log
+npm-debug.log*
+yarn-error.log
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+
+# IDE & editor
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docs & misc (optional)
+*.md
+!README.md
+docs/
+examples/
+tests/
+*_test.go
+*.test.ts
+*.spec.ts
+
+# Local dev artifacts
+tmp/
+temp/
+.cache/

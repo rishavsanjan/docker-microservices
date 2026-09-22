@@ -1,0 +1,66 @@
+# --- Dependencies ---
+node_modules/
+vendor/
+
+# --- Build outputs ---
+dist/
+build/
+.next/
+out/
+coverage/
+*.log
+npm-debug.log*
+yarn-error.log
+
+# --- Environment & secrets ---
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+
+# --- IDE & editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.rbc
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Test & temp ---
+tmp/
+temp/
+.cache/
+.deps/
+
+# --- Language-specific ---
+# Go
+bin/
+exe/
+*.exe
+*.test
+*.out
+go.work.sum
+
+# TypeScript/JS
+*.tsbuildinfo
+
+# Next.js / React
+.next/
+out/
+
+# Prisma (if used)
+prisma/*.db
+prisma/*.db-journal
+
+# --- Docs & examples (optional) ---
+# docs/
+# examples/
+
+# --- Local overrides ---
+# Add project-specific patterns below
