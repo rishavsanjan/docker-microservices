@@ -35,13 +35,28 @@ app.post("/shorten", (req, res) => {
 })
 
 
-app.get("/url/:id", (req, res) => {
+app.get("/url/:id", async (req, res) => {
+    const shortId = req.params.id;
     const url = urls.get(req.params.id)
 
     if (!url) {
         return res.status(404).json({
             error: "URL not found"
         });
+    }
+
+    try {
+        await fetch("http://analytics-service:6000/track", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                shortId
+            })
+        });
+    } catch (error) {
+        console.error("Analytics service error:", error.message);
     }
 
     res.json({
