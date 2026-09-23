@@ -46,7 +46,7 @@ app.get("/url/:id", async (req, res) => {
     }
 
     try {
-        await fetch("http://analytics-service:6000/track", {
+        await fetch("http://analytics-service:6001/track", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -56,7 +56,7 @@ app.get("/url/:id", async (req, res) => {
             })
         });
     } catch (error) {
-        console.error("Analytics service error:", error.message);
+        console.error("Analytics service error:", error.message, error);
     }
 
     res.json({

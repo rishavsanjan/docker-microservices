@@ -1,0 +1,26 @@
+services:
+  url-service:
+    build: ./url-service
+    container_name: url-service
+
+    ports:
+      - "5000:5000"
+
+    networks:
+      - microservices-network
+
+    depends_on:
+      - analytics-service
+
+  analytics-service:
+    build: ./analytics-service
+    container_name: analytics-service
+
+    ports:
+      - "6001:6001"
+
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
