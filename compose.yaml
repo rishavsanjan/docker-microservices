@@ -1,32 +1,64 @@
 services:
+
   url-service:
     build: ./url-service
-    container_name: url-service
 
     ports:
       - "5000:5000"
+
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: taskuser
+      DB_PASSWORD: taskpassword
+      DB_NAME: taskdb
 
     networks:
       - microservices-network
 
     depends_on:
-      - analytics-service
+      db:
+        condition: service_healthy
+
+      analytics-service:
+        condition: service_started
+
 
   analytics-service:
     build: ./analytics-service
-    container_name: analytics-service
-
-    ports:
-      - "6001:6001"
 
     networks:
       - microservices-network
+
+
+  db:
+    image: postgres:17-alpine
+
+    environment:
+      POSTGRES_USER: taskuser
+      POSTGRES_PASSWORD: taskpassword
+      POSTGRES_DB: taskdb
+
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+    networks:
+      - microservices-network
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskuser -d taskdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine
 
     networks:
       - microservices-network
+      
+volumes:
+  db-data:
 
 networks:
   microservices-network:
