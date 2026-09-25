@@ -22,5 +22,11 @@ services:
     networks:
       - microservices-network
 
+  redis:
+    image: redis:7-alpine
+
+    networks:
+      - microservices-network
+
 networks:
   microservices-network:
