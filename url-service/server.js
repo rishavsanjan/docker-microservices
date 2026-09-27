@@ -167,7 +167,8 @@ app.get("/url/:id", async (req, res) => {
 });
 
 
-
+await redisClient.connect();
+console.log("Connected to redis")
 app.listen(PORT, () => {
-    console.log(`URL service running on port ${PORT}`);
+    console.log(`URL Service running on port ${PORT}`);
 })

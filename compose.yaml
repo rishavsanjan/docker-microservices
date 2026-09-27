@@ -19,16 +19,20 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
       analytics-service:
         condition: service_started
-
+      redis:
+        condition: service_healthy
 
   analytics-service:
     build: ./analytics-service
 
     networks:
       - microservices-network
+    
+    depends_on:
+      redis:
+        condition: service_healthy
 
 
   db:
@@ -53,12 +57,22 @@ services:
 
   redis:
     image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
 
     networks:
       - microservices-network
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
       
 volumes:
   db-data:
+  redis-data:
 
 networks:
   microservices-network:
