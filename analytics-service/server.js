@@ -61,7 +61,7 @@ app.get("/stats/:shortId", async  (req, res) => {
         clicks: Number(clicks) || 0
       });
   } catch (error) {
-    console.error("Error getting statistics:", error);
+    console.error("Error getting statistics: ", error);
 
     res.status(500).json({
       message: "Internal server error"
