@@ -24,6 +24,8 @@ services:
       redis:
         condition: service_healthy
 
+    restart: unless-stopped
+
   analytics-service:
     build: ./analytics-service
 
@@ -33,6 +35,11 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+
+    mem_limit: 128m
+    cpus: 0.25
+
+    restart: unless-stopped
 
 
   db:
@@ -54,6 +61,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+    mem_limit: 256m
+    cpus: 0.5
 
   redis:
     image: redis:7-alpine

@@ -132,7 +132,10 @@ app.get("/url/:id", async (req, res) => {
 
     await redisClient.set(
       `url:${id}`,
-      originalUrl
+      originalUrl,
+      {
+        EX:60
+      }
     );
 
    

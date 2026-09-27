@@ -1,7 +1,15 @@
 FROM node:22-alpine
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
+
+COPY --chown=node:node package*.json ./
+
+RUN npm ci
+
+COPY --chown=node:node . .
+
+USER node
+
 EXPOSE 6001
-CMD [ "npm", "start" ]
+
+CMD ["npm", "start"]
