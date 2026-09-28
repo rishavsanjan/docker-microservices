@@ -73,6 +73,26 @@ app.get("/stats/:shortId", async  (req, res) => {
 await redisClient.connect()
 console.log('Redis client running')
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Analytics service running on port ${PORT}`);
 });
+
+async function shutdown() {
+  console.log("Shutting down URL service...");
+
+  server.close(async () => {
+    try {
+      await redisClient.quit();
+      await pool.end();
+
+      console.log("Connections closed");
+      process.exit(0);
+    } catch (error) {
+      console.error("Error during shutdown:", error);
+      process.exit(1);
+    }
+  });
+}
+
+process.on("SIGTERM", shutdown);
+process.on("SIGINT", shutdown);
