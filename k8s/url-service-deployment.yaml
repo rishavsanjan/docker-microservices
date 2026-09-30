@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: url-service
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: url-service
+
+  template:
+    metadata:
+      labels:
+        app: url-service
+
+    spec:
+      containers:
+        - name: url-service
+          image: docker-microservices-url-service:latest
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 5000
+
+          env:
+            - name: DB_HOST
+              value: "postgres"
+
+            - name: DB_PORT
+              value: "5432"
+
+            - name: DB_USER
+              value: "taskuser"
+
+            - name: DB_PASSWORD
+              value: "taskpassword"
+
+            - name: DB_NAME
+              value: "taskdb"
