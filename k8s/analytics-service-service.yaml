@@ -6,6 +6,6 @@ spec:
   selector:
     app: analytics-service
   ports:
-    - port: 6000
-      targetPort: 6000
+    - port: 6001
+      targetPort: 6001
   type: ClusterIP

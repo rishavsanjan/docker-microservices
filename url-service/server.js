@@ -42,7 +42,10 @@ app.get("/", (req, res) => {
 
 app.post("/shorten", async (req, res) => {
   try {
+    console.log("i m here")
     const { url } = req.body;
+
+    console.log(url)
 
     if (!url) {
       return res.status(400).json({

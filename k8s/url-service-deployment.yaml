@@ -26,18 +26,41 @@ spec:
           ports:
             - containerPort: 5000
 
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 100
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds:  10
+
           env:
-            - name: DB_HOST
-              value: "postgres"
+          - name: DB_HOST
+            value: "postgres"
 
-            - name: DB_PORT
-              value: "5432"
+          - name: DB_PORT
+            value: "5432"
 
-            - name: DB_USER
-              value: "taskuser"
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: POSTGRES_USER
 
-            - name: DB_PASSWORD
-              value: "taskpassword"
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: POSTGRES_PASSWORD
 
-            - name: DB_NAME
-              value: "taskdb"
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: POSTGRES_DB

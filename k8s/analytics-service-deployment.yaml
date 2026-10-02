@@ -1,6 +1,6 @@
 apiVersion: apps/v1
 
-kind: Deployment 
+kind: Deployment
 
 metadata:
   name: analytics-service
@@ -11,18 +11,34 @@ spec:
   selector:
     matchLabels:
       app: analytics-service
-  
+
   template:
     metadata:
       labels:
         app: analytics-service
-    
+
     spec:
-      - name: analytics-service
-        image: docker-microservices-analytics-service:latest
-        imagePullPolicy: IfNotPresent
-        ports:
-          - containerPort: 6000
-        env:
-          - name: REDIS_URL
-            value: "redis://redis:6379"
+      containers:
+        - name: analytics-service
+          image: docker-microservices-analytics-service:latest
+          imagePullPolicy: IfNotPresent
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 6001
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+            readinessProbe:
+              httpGet:
+                path: /
+                port: 6001
+              initialDelaySeconds: 5
+              periodSeconds: 10
+
+          ports:
+            - containerPort: 6001
+          env:
+            - name: REDIS_URL
+              value: "redis://redis:6379"
