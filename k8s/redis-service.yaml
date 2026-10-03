@@ -4,7 +4,8 @@ kind: Service
 
 metadata:
   name: redis
-
+  namespace: url-shortener
+  
 spec:
   selector:
     app: redis 

@@ -4,6 +4,7 @@ kind: Deployment
 
 metadata:
   name: analytics-service
+  namespace: url-shortener
 
 spec:
   replicas: 1
@@ -23,6 +24,14 @@ spec:
           image: docker-microservices-analytics-service:latest
           imagePullPolicy: IfNotPresent
 
+          resources:
+              requests:
+                cpu: "50m"
+                memory: "64Mi"
+              limits:
+                cpu: "250m"
+                memory: "128Mi"
+
           readinessProbe:
             httpGet:
               path: /
@@ -30,15 +39,21 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 10
 
-            readinessProbe:
-              httpGet:
-                path: /
-                port: 6001
-              initialDelaySeconds: 5
-              periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 6001
+            initialDelaySeconds: 5
+            periodSeconds:  10
+            
+            
 
           ports:
             - containerPort: 6001
+            
           env:
             - name: REDIS_URL
-              value: "redis://redis:6379"
+              valueFrom:
+                configMapKeyRef:
+                  name: analytics-service-config
+                  key: REDIS_URL

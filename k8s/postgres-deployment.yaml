@@ -3,7 +3,8 @@ kind: Deployment
 
 metadata:
   name: postgres
-
+  namespace: url-shortener
+  
 spec:
   replicas: 1
 

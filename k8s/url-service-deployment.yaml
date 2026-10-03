@@ -4,9 +4,10 @@ kind: Deployment
 
 metadata:
   name: url-service
-
+  namespace: url-shortener
+  
 spec:
-  replicas: 1
+  replicas: 3
 
   selector:
     matchLabels:
@@ -40,12 +41,27 @@ spec:
             initialDelaySeconds: 5
             periodSeconds:  10
 
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+              
+
           env:
           - name: DB_HOST
-            value: "postgres"
+            valueFrom:
+              configMapKeyRef:
+                name: url-service-config
+                key: DB_HOST
 
           - name: DB_PORT
-            value: "5432"
+            valueFrom:
+              configMapKeyRef:
+                name: url-service-config
+                key: DB_PORT
 
           - name: DB_USER
             valueFrom:

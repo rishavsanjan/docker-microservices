@@ -1,0 +1,10 @@
+apiVersion: v1 
+kind: ConfigMap 
+
+metadata: 
+  name: url-service-config
+  namespace: url-shortener
+  
+data:
+  DB_HOST: "postgres"
+  DB_PORT: "5432"
