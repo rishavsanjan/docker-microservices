@@ -9,6 +9,12 @@ metadata:
 spec:
   replicas: 3
 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1
+
   selector:
     matchLabels:
       app: url-service
@@ -21,7 +27,7 @@ spec:
     spec:
       containers:
         - name: url-service
-          image: docker-microservices-url-service:latest
+          image: url-service:v2
           imagePullPolicy: IfNotPresent
 
           ports:

@@ -34,7 +34,8 @@ redisClient.on("error", (error) => {
 app.get("/", (req, res) => {
   res.json({
     service: "URL Service",
-    status: "running"
+    status: "running",
+    version: "v2"
   });
 });
 
