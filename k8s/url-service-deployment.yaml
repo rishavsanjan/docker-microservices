@@ -23,8 +23,11 @@ spec:
     metadata:
       labels:
         app: url-service
+  
 
     spec:
+      serviceAccountName: url-service
+
       containers:
         - name: url-service
           image: url-service:v2

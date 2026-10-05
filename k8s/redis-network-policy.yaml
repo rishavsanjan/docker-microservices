@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+
+kind: NetworkPolicy
+metadata:
+  name: redis-ingress
+  namespace: url-shortener
+
+spec: 
+  podSelector:
+    matchLabels:
+      app: redis 
+  
+  policyTypes:  
+    - Ingress 
+  
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: url-service
+
+        - podSelector:
+            matchLabels:
+              app: analytics-service
+      
+      ports:
+      - port:  6379
+        protocol: TCP

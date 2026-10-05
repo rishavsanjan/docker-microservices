@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+
+metadata:
+  name: url-service-reader-binding
+  namespace: url-shortener
+
+subjects:
+  - kind: ServiceAccount
+    name: url-service 
+    namespace: url-shortener
+
+roleRef:
+  kind: Role
+  name: url-service-reader 
+  apiGroup: rbac.authorization.k8s.io

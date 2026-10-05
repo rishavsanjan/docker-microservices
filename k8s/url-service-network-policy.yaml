@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+
+kind: NetworkPolicy
+metadata:
+  name: url-service-ingress
+  namespace: url-shortener
+
+spec:
+  podSelector:
+    matchLabels:
+      app: url-service 
+  
+  policyTypes:
+    - Ingress 
+  
+  ingress:
+    - from:
+        - namespaceSelector: # it means Allow traffic only from the Ingress Controller Pods in the ingress-nginx namespace.
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/component: controller
+
+      ports:
+        - protocol: TCP
+          port: 5000
