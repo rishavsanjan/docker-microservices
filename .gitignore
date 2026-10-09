@@ -64,3 +64,6 @@ prisma/*.db-journal
 
 # --- Local overrides ---
 # Add project-specific patterns below
+
+/terraform/.terraform
+/terraform/.terraform.lock.hcl
